@@ -1,0 +1,13 @@
+# Master lang file
+
+item.cheatycomputers.package.name=Magical Package
+
+item.cheatycomputers.package.set=Magical Package: %s
+item.cheatycomputers.package.tip=This is totally not cheating.\nRight click while sneaking to unpack.
+
+set.cheatycomputers.case1=Case (Tier 1)
+set.cheatycomputers.case2=Case (Tier 2)
+set.cheatycomputers.case3=Case (Tier 3)
+
+chat.cheatycomputers.obstructed=Target position obstructed.
+chat.cheatycomputers.invalid=§cError: Package is empty.

@@ -1,0 +1,17 @@
+[
+{
+  "modid": "CheatyComputers",
+  "name": "Cheaty Computers",
+  "description": "Has items that cheat in fully assembled OpenComputers computers.",
+  "version": "${version}",
+  "credits": "",
+  "logoFile": "",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [ "Vexatos" ],
+  "parent":"",
+  "screenshots": [],
+  "dependencies": []
+}
+]
