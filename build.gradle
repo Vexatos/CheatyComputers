@@ -11,12 +11,12 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
 	}
 }
 
 apply plugin: 'scala'
-apply plugin: 'forge'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 file "build.properties" withReader {
 	def prop = new Properties()
@@ -36,11 +36,11 @@ if (JavaVersion.current().isJava8Compatible()) {
 	}
 }
 
-configurations {
+/*configurations {
 	provided
 	embedded
 	compile.extendsFrom provided, embedded
-}
+}*/
 
 repositories {
 	maven {
@@ -50,37 +50,33 @@ repositories {
 }
 
 dependencies {
-	compile "li.cil.oc:OpenComputers:${config.oc.version}:dev"
+	deobfCompile "li.cil.oc:OpenComputers:${config.oc.version}"
 }
 
 minecraft {
 	version = "${config.minecraft.version}-${config.forge.version}"
 	runDir = "eclipse"
+	mappings = config.mappings
 
 	replaceIn "vexatos/cheatycomputers/CheatyComputers.java"
 	replace "@VERSION@", "${config.cc.version}"
-}
-
-sourceSets {
-	main {
-		output.resourcesDir = 'build/classes/main'
-	}
 }
 
 jar {
 	exclude 'cofh/**'
 }
 
-apply plugin: 'idea'
 idea {
 	module {
-		scopes.PROVIDED.plus += [configurations.provided]
+		//scopes.PROVIDED.plus += [configurations.provided]
 		outputDir = file('build/classes/main')
 	}
 }
 
 processResources
 	{
+		inputs.property "version", project.version
+		inputs.property "mcversion", project.minecraft.version
 		// replace stuff in mcmod.info, nothing else
 		from(sourceSets.main.resources.srcDirs) {
 			include 'mcmod.info'
@@ -103,7 +99,7 @@ task deobfJar(type: Jar) {
 	description = 'Creates a jar file containing the non-obfuscated class files'
 	classifier = 'deobf'
 	destinationDir = file(libDir)
-	from sourceSets.main.output
+	from sourceSets.main.output.classesDir
 }
 
 task apiZip(type: Zip) {

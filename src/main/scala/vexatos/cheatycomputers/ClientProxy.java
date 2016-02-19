@@ -1,6 +1,8 @@
 package vexatos.cheatycomputers;
 
-import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import vexatos.cheatycomputers.client.PackageItemRenderer;
 
 /**
@@ -10,6 +12,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerRenderers() {
-		MinecraftForgeClient.registerItemRenderer(CheatyComputers.item, new PackageItemRenderer());
+		CheatyComputers.item.renderer = new PackageItemRenderer(new ModelResourceLocation("cheatycomputers:package", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(CheatyComputers.item, 0, CheatyComputers.item.renderer.resourceLocation);
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(CheatyComputers.item, CheatyComputers.item.renderer);
 	}
 }

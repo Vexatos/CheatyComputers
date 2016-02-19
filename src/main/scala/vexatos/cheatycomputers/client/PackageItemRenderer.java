@@ -1,36 +1,26 @@
 package vexatos.cheatycomputers.client;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import li.cil.oc.client.KeyBindings;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.client.IItemRenderer;
-import org.lwjgl.opengl.GL11;
-import vexatos.cheatycomputers.ScalaProxy;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import vexatos.cheatycomputers.util.PackageUtil;
 
 @SideOnly(Side.CLIENT)
-public class PackageItemRenderer implements IItemRenderer {
+public class PackageItemRenderer implements ItemMeshDefinition /*, IPerspectiveAwareModel, IFlexibleBakedModel*/ {
 
-	private static final RenderItem renderItem = new RenderItem();
-	private static final Minecraft mc = Minecraft.getMinecraft();
+	public final ModelResourceLocation resourceLocation;
 
-	private static ItemStack getContainedFromPackage(ItemStack stack) {
-		if(stack == null) {
-			return null;
-		}
-
-		NBTTagCompound tag = stack.getTagCompound();
-		if(tag == null || !tag.hasKey("t")) {
-			return null;
-		}
-		return ScalaProxy.getCase(tag.getInteger("t")).createItemStack(1);
+	public PackageItemRenderer(ModelResourceLocation resourceLocation) {
+		this.resourceLocation = resourceLocation;
 	}
 
-	private boolean recursion = false; // Prevent recursion
+	// Old
+
+	/*private boolean recursion = false; // Prevent recursion
 
 	@Override
 	public boolean handleRenderType(ItemStack stack, ItemRenderType type) {
@@ -60,5 +50,20 @@ public class PackageItemRenderer implements IItemRenderer {
 		GL11.glPopAttrib();
 
 		recursion = false;
+	}*/
+
+	@Override
+	public ModelResourceLocation getModelLocation(ItemStack stack) {
+		if(KeyBindings.showExtendedTooltips()) {
+			ItemStack contained = PackageUtil.getContainedFromPackage(stack);
+			if(contained != null) {
+				NBTTagCompound tag = stack.getTagCompound();
+				if(tag != null) {
+					int tier = tag.hasKey("t") ? tag.getInteger("t") + 1 : 1;
+					return new ModelResourceLocation("opencomputers:case" + tier, "inventory");
+				}
+			}
+		}
+		return resourceLocation;
 	}
 }

@@ -10,7 +10,7 @@ import li.cil.oc.util.{BlockPosition, InventoryUtils}
 import net.minecraft.entity.Entity
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList, NBTTagString}
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 /**
   * @author Vexatos
@@ -83,7 +83,7 @@ object ScalaProxy {
   def setFacing(rotatable: Rotatable, entity: Entity) = {
     rotatable.setFromEntityPitchAndYaw(entity)
     if (!rotatable.validFacings.contains(rotatable.pitch)) {
-      rotatable.pitch = rotatable.validFacings.headOption.getOrElse(ForgeDirection.NORTH)
+      rotatable.pitch = rotatable.validFacings.headOption.getOrElse(EnumFacing.NORTH)
     }
     rotatable.invertRotation()
   }

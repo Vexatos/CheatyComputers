@@ -1,6 +1,6 @@
 package vexatos.cheatycomputers.reference;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * @author Vexatos

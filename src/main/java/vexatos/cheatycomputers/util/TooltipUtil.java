@@ -1,10 +1,10 @@
 package vexatos.cheatycomputers.util;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class TooltipUtil {
 	@SuppressWarnings("unchecked")
 	@SideOnly(Side.CLIENT)
 	public static void addShiftTooltip(ItemStack stack, List tooltip) {
-		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+		FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
 		final String key = stack.getUnlocalizedName() + ".tip";
 		if(StringUtil.canTranslate(key)) {
 			String tip = StringUtil.localize(key);
